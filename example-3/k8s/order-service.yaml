@@ -16,16 +16,16 @@ spec:
       labels:
         app: order-service
       annotations:
-        prometheus.io/scrape: 'true' # Instruct Prometheus to scrape this pod
-        prometheus.io/path: '/metrics' # The path where metrics are exposed
-        prometheus.io/port: '8000' # The port where metrics are exposed on the container
+        prometheus.io/scrape: 'true'   # Prometheus scrapes this pod
+        prometheus.io/path: '/metrics' # Metrics endpoint
+        prometheus.io/port: '8000'     # Metrics port
     spec:
       containers:
       - name: order-service-container
-        image: <AZURE_ACR>/order:latest
+        image: munaweek09acr.azurecr.io/order-service:latest   # ✅ fixed ACR image
         imagePullPolicy: Always
         ports:
-        - containerPort: 8001
+        - containerPort: 8000                                   # ✅ match app port
         env:
         - name: POSTGRES_HOST
           value: order-db-service-w09-aks
@@ -61,6 +61,6 @@ spec:
     app: order-service
   ports:
     - protocol: TCP
-      port: 8001
-      targetPort: 8000
+      port: 8001       # exposed to outside
+      targetPort: 8000 # forwarded to container port
   type: LoadBalancer
