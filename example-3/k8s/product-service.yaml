@@ -16,13 +16,13 @@ spec:
       labels:
         app: product-service
       annotations:
-        prometheus.io/scrape: 'true' # Instruct Prometheus to scrape this pod
-        prometheus.io/path: '/metrics' # The path where metrics are exposed
-        prometheus.io/port: '8000' # The port where metrics are exposed on the container
+        prometheus.io/scrape: 'true'         # Prometheus scrapes this pod
+        prometheus.io/path: '/metrics'       # Metrics endpoint
+        prometheus.io/port: '8000'           # Metrics port
     spec:
       containers:
       - name: product-service-container
-        image: AZURE_CONTAINER_REGISTRY/product_service:latest
+        image: munaweek09acr.azurecr.io/product-service:latest   # ✅ fixed image
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
